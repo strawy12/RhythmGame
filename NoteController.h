@@ -1,5 +1,6 @@
 #pragma once
 #include "Note.h"
+#include "NotePair.h"
 
 class NoteController
 {
@@ -11,6 +12,7 @@ public:
 		if (instance == nullptr)
 		{
 			instance = new NoteController;
+			instance->Init();
 		}
 
 		return instance;
@@ -27,12 +29,15 @@ public:
 	void AddNote(Note* note);
 	void RemoveNote(Note* note);
 
+	void PushNotePair(int color, POS pos, float delay, Note_Type type, int height = 0);
+
 	bool JudgmentOffset(float fValue1, int iValue2);
 
 	Note* EqualNotePos(int x, int y, bool useOffset = false);  
 
 private:
 	vector<Note*> m_pNotes;
+	queue<NotePair*> m_notePairs;
 
 	float m_timer;
 	float m_delayTime;

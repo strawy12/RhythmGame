@@ -25,7 +25,7 @@ void CSound::Init()
 
 void CSound::Load()
 {
-	m_pFMODSystem->createSound("Data/Background.wav", FMOD_LOOP_NORMAL | FMOD_DEFAULT, nullptr, &m_pSound[ST_BACKGROUNDSOUND]);
+	m_pFMODSystem->createSound("Data/Darkness.wav", FMOD_LOOP_NORMAL | FMOD_DEFAULT, nullptr, &m_pSound[ST_DARKNESSMUSIC]);
 
 	m_pFMODSystem->createSound("Data/Effect.wav", FMOD_DEFAULT, nullptr, &m_pSound[ST_EFFECTSOUND]);
 }
@@ -39,10 +39,13 @@ void CSound::Play(int _Type)
 	m_pChannel[_Type]->setVolume(1.0f);
 }
 
+
+
 void CSound::Stop(int _Type)
 {
 	if (_Type < 0 || _Type >= ST_MAXSOUND) return;
-	m_pChannel[_Type]->stop();
+	m_pFMODSystem->playSound(m_pSound[_Type], 0, true, &m_pChannel[_Type]);
+	//m_pChannel[_Type]->stop();
 }
 
 void CSound::Paused(int _Type, bool bPaused)
@@ -55,4 +58,9 @@ void CSound::Release()
 {
 	m_pFMODSystem->release();
 	m_pFMODSystem->close();
+}
+
+void CSound::SetVolume(int _Type,float volume)
+{
+	m_pChannel[_Type]->setVolume(volume);
 }

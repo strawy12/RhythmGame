@@ -8,7 +8,7 @@ using namespace FMOD;
 
 enum ESoundType
 {
-	ST_BACKGROUNDSOUND = 0,
+	ST_DARKNESSMUSIC = 0,
 	ST_EFFECTSOUND,
 	ST_MAXSOUND
 };
@@ -26,6 +26,8 @@ public:
 	void Stop(int _Type);
 	void Paused(int _type, bool bpaused);
 	void Release();
+
+	void SetVolume(int _Type, float volume);
 
 private:
 	System* m_pFMODSystem;

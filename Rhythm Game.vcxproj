@@ -163,6 +163,7 @@
     <ClInclude Include="Note.h" />
     <ClInclude Include="NoteController.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="NotePair.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Rhythm Game.rc" />

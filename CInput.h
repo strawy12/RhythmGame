@@ -13,6 +13,8 @@ enum KEYSTATE
 
 struct TInputState
 {
+	DWORD dwKeyESC;
+
 	DWORD dwKeyUp;
 	DWORD dwKeyDown;
 	DWORD dwKeyLeft;

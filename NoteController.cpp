@@ -3,8 +3,9 @@ NoteController* NoteController::instance = nullptr;
 
 NoteController::NoteController()
 	: m_timer(0.0f)
-	, m_delayTime(1.0f)
-	, m_noteDefaultSpeed(15.0f)
+	, m_delayTime(0.9f)
+	, m_noteDefaultSpeed(17.0f)
+	, m_judgmentOffset(3.0f)
 {
 }
 
@@ -14,13 +15,10 @@ NoteController::~NoteController()
 
 void NoteController::Init()
 {
-	//for (int i = 0; i < 16; i++)
-	//{
-
-
-	//}
-
+		PushNotePair(C_RANDOM, POS{ KEY_D, 0 }, 0.4f, Note_Type::Long, 30);
 }
+
+
 
 void NoteController::Update(float dt)
 {
@@ -30,10 +28,14 @@ void NoteController::Update(float dt)
 	{
 		m_timer = 0;
 
-		float posX = 2.0f + (8 * (rand() % 4));
+		if (m_notePairs.size() != 0)
+		{
+			NotePair* pair = m_notePairs.front();
+			m_notePairs.pop();
+			m_pNotes.push_back(pair->m_Note);
 
-		Note* note = new Note(rand() % 15 + 1, POS{ posX,0.0f }, m_noteDefaultSpeed);
-		m_pNotes.push_back(note);
+			m_delayTime = pair->m_NextDelay;
+		}
 	}
 
 	for (int i = 0; i < m_pNotes.size(); i++)
@@ -62,11 +64,16 @@ void NoteController::RemoveNote(Note* note)
 		}
 	}
 }
+void NoteController::PushNotePair(int color, POS pos, float delay, Note_Type type, int height)
+{
+	m_notePairs.push(new NotePair(new Note(color, pos, m_noteDefaultSpeed, type, height), delay));
+}
+
 bool NoteController::JudgmentOffset(float fValue1, int iValue2)
 {
-	if ((int)fValue1  == iValue2 ||
-		(int)(fValue1 + m_judgmentOffset) == iValue2 ||
-		(int)(fValue1 - m_judgmentOffset) == iValue2)
+	if (
+		(fValue1 + m_judgmentOffset) >= iValue2 &&
+		(fValue1 - m_judgmentOffset) <= iValue2)
 	{
 		return true;
 	}
@@ -77,9 +84,23 @@ Note* NoteController::EqualNotePos(int x, int y, bool useOffset)
 {
 	for (int i = 0; i < m_pNotes.size(); i++)
 	{
+		if (m_pNotes[i]->GetType() == Note_Type::Long)
+		{
+			for (int j = 0; j < m_pNotes[i]->GetHeight(); j++)
+			{
+				if ((int)m_pNotes[i]->GetPos().x == x &&
+					(int)m_pNotes[i]->GetPos().y - j == y)
+				{
+					return m_pNotes[i];
+				}
+			}
+
+			continue;
+		}
+
 		if (useOffset)
 		{
-			if (JudgmentOffset(m_pNotes[i]->GetPos().x, x) &&
+			if ((int)m_pNotes[i]->GetPos().x == x &&
 				JudgmentOffset(m_pNotes[i]->GetPos().y, y))
 			{
 				return m_pNotes[i];

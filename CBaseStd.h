@@ -4,9 +4,8 @@
 #include<Windows.h>
 #include<math.h>
 #include<string>
-#include<map>
 #include<vector>
-#include<list>
+#include<queue>
 #include<ctime>
 
 using namespace std;
@@ -21,6 +20,11 @@ using namespace std;
 #define VK_F 0x46
 #define VK_J 0x4A
 #define VK_K 0x4B
+
+#define KEY_D 2
+#define KEY_F 10
+#define KEY_J 18
+#define KEY_K 26
 
 
 typedef struct _pos
@@ -46,7 +50,8 @@ enum COLOR
 	C_LIGHTRED,
 	C_LIGHTPURPLE,
 	C_LIGHTYELLOW,
-	C_LIGHTWHITE
+	C_LIGHTWHITE,
+	C_RANDOM
 };
 
 #pragma comment(lib, "winmm.lib")

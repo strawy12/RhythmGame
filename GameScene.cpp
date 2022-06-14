@@ -17,8 +17,13 @@ void GameScene::Init()
 		m_pNoteController = new NoteController;
 
 	}
+	m_soundManager.Init();
 	m_InputObject.Init();
 	m_pNoteController->Init();
+
+	m_soundManager.Play(ST_DARKNESSMUSIC);
+	m_soundManager.SetVolume(ST_DARKNESSMUSIC, 0.1f);
+
 }
 
 void GameScene::Update(float dt)
@@ -46,7 +51,7 @@ void GameScene::PrintScreen()
 
 			if (note)
 			{
-					note->PrintNote();
+				note->PrintNote();
 			}
 
 			else if(i == 12)
@@ -74,12 +79,20 @@ void GameScene::CheckNoteKey()
 	m_InputObject.KeyCheck(VK_F, m_InputState.dwKeyF);
 	m_InputObject.KeyCheck(VK_J, m_InputState.dwKeyJ);
 	m_InputObject.KeyCheck(VK_K, m_InputState.dwKeyK);
+	m_InputObject.KeyCheck(VK_ESCAPE, m_InputState.dwKeyESC);
 
-	int PosX = 0;
+	int PosX = -1;
+	bool keyDown = false;
 
 	if (m_InputState.dwKeyD == KEY_PUSH)
 	{
 		PosX = 2;
+	}
+
+	else if (m_InputState.dwKeyD == KEY_DOWN)
+	{
+		PosX = 2;
+		keyDown = true;
 	}
 
 	if (m_InputState.dwKeyF == KEY_PUSH)
@@ -97,12 +110,31 @@ void GameScene::CheckNoteKey()
 		PosX = 26;
 	}
 
+	if (m_InputState.dwKeyESC == KEY_PUSH)
+	{
+		_isPaused = !_isPaused;
+		m_soundManager.Paused(ST_DARKNESSMUSIC, _isPaused);
+	}
+
+	if (PosX == -1) return;
+
 	Note* p_note = m_pNoteController->EqualNotePos(PosX , 12 + TITLE_OFFSET_Y, true);
+
+
 	if (p_note != nullptr)
 	{
-		if(12 + TITLE_OFFSET_Y - p_note->GetPos().y)
+		if (12 + TITLE_OFFSET_Y - p_note->GetPos().y)
+		{
+			if (keyDown)
+			{
 
-		m_pNoteController->RemoveNote(p_note);
+			}
+			else
+			{
+				m_pNoteController->RemoveNote(p_note);
+			}
+		}
+			
 	}
 }
 
@@ -111,6 +143,9 @@ void GameScene::CheckNoteKey()
 
 void GameScene::Release()
 {
+	m_soundManager.Release();
+	m_InputObject.Release();
+	m_pNoteController->Release();
 }
 
 void GameScene::PrintTitle()
