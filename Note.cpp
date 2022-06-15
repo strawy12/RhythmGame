@@ -7,6 +7,7 @@ Note::Note()
 	, m_fSpeed(0.0f)
 	, m_Type(Note_Type::Single)
 	, m_Height(1)
+	, m_keyPush(false)
 {
 
 }
@@ -17,6 +18,7 @@ Note::Note(POS pos, float speed, Note_Type type, int height)
 	, m_fSpeed(speed)
 	, m_Type(type)
 	, m_Height(height)
+	, m_keyPush(false)
 {
 
 }
@@ -27,6 +29,7 @@ Note::Note(int color, POS pos, float speed, Note_Type type, int height)
 	, m_fSpeed(speed)
 	, m_Type(type)
 	, m_Height(height)	
+	, m_keyPush(false)
 
 {
 }
@@ -69,7 +72,13 @@ void Note::NoteDown()
 {
 	if (m_Type == Note_Type::Long)
 	{
-		// ToDo : height 감소하면서 포지션 변화 구현
+		if (m_keyPush == false)
+		{
+			m_keyPush = true;
+		}
+
+		m_Height--;
+		m_Pos.y--;
 	}
 }
 

@@ -37,7 +37,7 @@ void GameScene::PrintScreen()
 {
 	GoToXY(0, 0);
 
-	PrintTitle();
+	//PrintTitle();
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -46,7 +46,7 @@ void GameScene::PrintScreen()
 			SetCursorColor(C_WHITE, C_BLACK);
 			cout << "¡á";
 
-			Note* note = m_pNoteController->EqualNotePos(2 + (8 *j), i + TITLE_OFFSET_Y);
+			Note* note = m_pNoteController->EqualNotePos(2 + (8 * j), i + TITLE_OFFSET_Y);
 
 
 			if (note)
@@ -54,12 +54,12 @@ void GameScene::PrintScreen()
 				note->PrintNote();
 			}
 
-			else if(i == 12)
+			else if (i == 12)
 			{
 				cout << "¡à¡à¡à";
 			}
 
-			else 
+			else
 			{
 				cout << "¡¡¡¡¡¡";
 			}
@@ -118,23 +118,22 @@ void GameScene::CheckNoteKey()
 
 	if (PosX == -1) return;
 
-	Note* p_note = m_pNoteController->EqualNotePos(PosX , 12 + TITLE_OFFSET_Y, true);
+	Note* p_note = m_pNoteController->EqualNotePos(PosX, 12 + TITLE_OFFSET_Y, true);
 
 
 	if (p_note != nullptr)
 	{
-		if (12 + TITLE_OFFSET_Y - p_note->GetPos().y)
+		if (p_note->GetType() == Note_Type::Long && p_note->GetHeight() != 0)
 		{
-			if (keyDown)
+			if (keyDown == p_note->GetKeyDown())
 			{
-
-			}
-			else
-			{
-				m_pNoteController->RemoveNote(p_note);
+				p_note->NoteDown();
 			}
 		}
-			
+		else
+		{
+			m_pNoteController->RemoveNote(p_note);
+		}
 	}
 }
 
@@ -148,18 +147,7 @@ void GameScene::Release()
 	m_pNoteController->Release();
 }
 
-void GameScene::PrintTitle()
-{
-	cout << " ________  ___  ___      ___    ___ _________  ___  ___  _____ ______       " << endl;
-	cout << "|\   __  \|\  \|\  \    |\  \  /  /|\___   ___\\  \|\  \|\   _ \  _   \     " << endl;
-	cout << "\ \  \|\  \ \  \\\  \   \ \  \/  / ||___ \  \_\ \  \\\  \ \  \\\__\ \  \    " << endl;
-	cout << " \ \   _  _\ \   __  \   \ \    / /     \ \  \ \ \   __  \ \  \\|__| \  \   " << endl;
-	cout << "  \ \  \\  \\ \  \ \  \   \/  /  /       \ \  \ \ \  \ \  \ \  \    \ \  \  " << endl;
-	cout << "   \ \__\\ _\\ \__\ \__\__/  / /          \ \__\ \ \__\ \__\ \__\    \ \__\ " << endl;
-	cout << "    \|__|\|__|\|__|\|__|\___/ /            \|__|  \|__|\|__|\|__|     \|__| " << endl;
-	cout << "                       \|___|/                                              " << endl;
 
-}
 
 void GameScene::PrintUI()
 {
@@ -170,13 +158,14 @@ void GameScene::PrintUI()
 	cout << "SONG NAME : DarkNess" << endl;
 	GoToXY(40, TITLE_OFFSET_Y + 1);
 	cout << "SCORE : 1000000" << endl;
-	GoToXY(40, TITLE_OFFSET_Y +2);
+	GoToXY(40, TITLE_OFFSET_Y + 2);
 
 	cout << "CLASS : B" << endl;
 	GoToXY(40, TITLE_OFFSET_Y + 3);
 
 
 }
+
 
 
 

@@ -5,17 +5,17 @@
 class NoteController
 {
 private:
-	static NoteController* instance;
+	static NoteController* m_Instance;
 public:
 	static NoteController* GetInstance()
 	{
-		if (instance == nullptr)
+		if (m_Instance == nullptr)
 		{
-			instance = new NoteController;
-			instance->Init();
+			m_Instance = new NoteController;
+			m_Instance->Init();
 		}
 
-		return instance;
+		return m_Instance;
 	}
 
 public:
@@ -33,7 +33,7 @@ public:
 
 	bool JudgmentOffset(float fValue1, int iValue2);
 
-	Note* EqualNotePos(int x, int y, bool useOffset = false);  
+	Note* EqualNotePos(int x, int y, bool useOffset = false);
 
 private:
 	vector<Note*> m_pNotes;

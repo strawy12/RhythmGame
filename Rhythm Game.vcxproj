@@ -152,11 +152,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="NoteController.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseStd.h" />
     <ClInclude Include="CInput.h" />
     <ClInclude Include="console.h" />
+    <ClInclude Include="CScene.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="main.h" />
@@ -164,6 +167,8 @@
     <ClInclude Include="NoteController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="NotePair.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Rhythm Game.rc" />

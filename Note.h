@@ -27,12 +27,14 @@ public:
 	void NoteDown();
 	void PrintNote();
 	void SetColor(int color);
+	bool GetKeyDown() { return m_keyPush; }
 	POS GetPos();
 	Note_Type GetType() { return m_Type; }
 	int GetHeight() { return m_Height; }
 
 private:
 	POS m_Pos;
+	bool m_keyPush;
 	int m_Color;
 	float m_fSpeed;
 	Note_Type m_Type;

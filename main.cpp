@@ -1,7 +1,9 @@
-#include "CSound.h"
 #include "console.h"
+#include "CScene.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 #include "main.h"
+#include "CBaseStd.h"
 
 LARGE_INTEGER g_liPrevCount;
 LARGE_INTEGER g_liCurCount;
@@ -10,26 +12,35 @@ LARGE_INTEGER g_liFrequency;
 float g_fDT;
 float g_fAcc;
 
-GameScene* mainScene;
+CScene* g_pMainScene;
+map<string, CScene*> g_pSceneMap;
+
+class GameScene;
 void MainLoop();
+
 int main()
 {
-	mainScene = new GameScene;
+    g_pSceneMap.insert(g_pSceneMap.end(), pair<string, CScene*>("GameScene", new GameScene()));
+    g_pSceneMap.insert(g_pSceneMap.end(), pair<string, CScene*>("TitleScene", new TitleScene()));
     // 현재 카운트
     QueryPerformanceCounter(&g_liPrevCount);
 
     // 초당 카운트 횟수
     QueryPerformanceFrequency(&g_liFrequency);
 
+    g_pMainScene = g_pSceneMap["TitleScene"];
+
     CursorView(false);
+    system("mode con cols=100 lines=30 | title If Rhythm");
     srand(time(NULL));
 
-    mainScene->Init();
+    g_pMainScene->Init();
 
     while (true)
     {
         MainLoop();
     }
+
 }
 
 
@@ -50,6 +61,6 @@ void MainLoop()
 		g_fAcc = 0.0f;
 	}
 
-	mainScene->Update(g_fDT);
+    g_pMainScene->Update(g_fDT);
 }
 

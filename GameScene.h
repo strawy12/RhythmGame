@@ -1,24 +1,23 @@
 #pragma once
-#include "CBaseStd.h"
+#include "CScene.h"
 #include "NoteController.h"
 #include "CInput.h"
 #include "CSound.h"
 
-class GameScene
+class GameScene : public CScene
 {
 public:
 	GameScene();
-	~GameScene();
+	virtual ~GameScene();
 
 public:
-	void Init();
-	void Update(float dt);
-	void Release();
+	virtual void Init() override;
+	virtual void Update(float dt) override;
+	virtual void Release() override;
+	virtual void PrintScreen() override;
 
 public:
-	void PrintScreen();
 	void CheckNoteKey();
-	void PrintTitle();
 	void PrintUI();
 
 private:
@@ -27,5 +26,7 @@ private:
 	NoteController* m_pNoteController;
 	CInput m_InputObject;
 	TInputState		m_InputState;
+
+
 };
 

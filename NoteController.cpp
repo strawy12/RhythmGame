@@ -1,5 +1,5 @@
 #include "NoteController.h"
-NoteController* NoteController::instance = nullptr;
+NoteController* NoteController::m_Instance = nullptr;
 
 NoteController::NoteController()
 	: m_timer(0.0f)
@@ -15,6 +15,7 @@ NoteController::~NoteController()
 
 void NoteController::Init()
 {
+		PushNotePair(C_RANDOM, POS{ KEY_D, 0 }, 4.0f, Note_Type::Long, 30);
 		PushNotePair(C_RANDOM, POS{ KEY_D, 0 }, 0.4f, Note_Type::Long, 30);
 }
 
