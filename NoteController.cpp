@@ -15,7 +15,7 @@ NoteController::~NoteController()
 
 void NoteController::Init()
 {
-		PushNotePair(C_RANDOM, POS{ KEY_D, 0 }, 4.0f, Note_Type::Long, 30);
+		PushNotePair(C_RANDOM, POS{ KEY_D, 0 }, 4.0f, Note_Type::Long, 10);
 		PushNotePair(C_RANDOM, POS{ KEY_D, 0 }, 0.4f, Note_Type::Long, 30);
 }
 
@@ -89,11 +89,24 @@ Note* NoteController::EqualNotePos(int x, int y, bool useOffset)
 		{
 			for (int j = 0; j < m_pNotes[i]->GetHeight(); j++)
 			{
-				if ((int)m_pNotes[i]->GetPos().x == x &&
-					(int)m_pNotes[i]->GetPos().y - j == y)
+				if (useOffset)
 				{
-					return m_pNotes[i];
+					if ((int)m_pNotes[i]->GetPos().x == x &&
+						JudgmentOffset(m_pNotes[i]->GetPos().y - j, y))
+					{
+						return m_pNotes[i];
+					}
 				}
+
+				else
+				{
+					if ((int)m_pNotes[i]->GetPos().x == x &&
+						(int)m_pNotes[i]->GetPos().y - j == y)
+					{
+						return m_pNotes[i];
+					}
+				}
+				
 			}
 
 			continue;

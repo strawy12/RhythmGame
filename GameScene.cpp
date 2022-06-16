@@ -1,9 +1,9 @@
 #include "GameScene.h"
 
 GameScene::GameScene()
-	: m_pNoteController(nullptr)
-	, m_InputState{}
 {
+	m_pNoteController = (nullptr);
+	m_InputState = {};
 }
 
 GameScene::~GameScene()
@@ -17,12 +17,12 @@ void GameScene::Init()
 		m_pNoteController = new NoteController;
 
 	}
-	m_soundManager.Init();
+	m_SoundObject.Init();
 	m_InputObject.Init();
 	m_pNoteController->Init();
 
-	m_soundManager.Play(ST_DARKNESSMUSIC);
-	m_soundManager.SetVolume(ST_DARKNESSMUSIC, 0.1f);
+	m_SoundObject.Play(ST_DARKNESSMUSIC);
+	m_SoundObject.SetVolume(ST_DARKNESSMUSIC, 0.1f);
 
 }
 
@@ -35,18 +35,25 @@ void GameScene::Update(float dt)
 
 void GameScene::PrintScreen()
 {
+	int posX = 27;
+	int posY = 2;
 	GoToXY(0, 0);
 
-	//PrintTitle();
+	PrintTitle(3, 0);
 
-	for (int i = 0; i < 15; i++)
+	int i = 0;
+	int j = 0;
+
+	for ( i = 0; i < 15; i++)
 	{
-		for (int j = 0; j < 4; j++)
+		GoToXY(posX, i + TITLE_OFFSET_Y + posY);
+
+		for (j = 0; j < 4; j++)
 		{
 			SetCursorColor(C_WHITE, C_BLACK);
 			cout << "¡á";
 
-			Note* note = m_pNoteController->EqualNotePos(2 + (8 * j), i + TITLE_OFFSET_Y);
+			Note* note = m_pNoteController->EqualNotePos(2 + (8 * j), i);
 
 
 			if (note)
@@ -67,8 +74,12 @@ void GameScene::PrintScreen()
 
 		SetCursorColor(C_WHITE, C_BLACK);
 		cout << "¡á";
-		cout << endl;
 	}
+
+	GoToXY(posX, (i++)+ +TITLE_OFFSET_Y + posY);
+	cout << "¡á¡¡D ¡¡¡á¡¡F ¡¡¡á¡¡J ¡¡¡á¡¡K ¡¡¡á";
+	GoToXY(posX, (i++) + +TITLE_OFFSET_Y + posY);
+	cout << "¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á";
 
 	PrintUI();
 }
@@ -86,39 +97,39 @@ void GameScene::CheckNoteKey()
 
 	if (m_InputState.dwKeyD == KEY_PUSH)
 	{
-		PosX = 2;
+		PosX = KEY_D;
 	}
 
 	else if (m_InputState.dwKeyD == KEY_DOWN)
 	{
-		PosX = 2;
+		PosX = KEY_D;
 		keyDown = true;
 	}
 
 	if (m_InputState.dwKeyF == KEY_PUSH)
 	{
-		PosX = 10;
+		PosX = KEY_F;
 	}
 
 	if (m_InputState.dwKeyJ == KEY_PUSH)
 	{
-		PosX = 18;
+		PosX = KEY_J;
 	}
 
 	if (m_InputState.dwKeyK == KEY_PUSH)
 	{
-		PosX = 26;
+		PosX = KEY_K;
 	}
 
 	if (m_InputState.dwKeyESC == KEY_PUSH)
 	{
-		_isPaused = !_isPaused;
-		m_soundManager.Paused(ST_DARKNESSMUSIC, _isPaused);
+		IsPaused = !IsPaused;
+		m_SoundObject.Paused(ST_DARKNESSMUSIC, IsPaused);
 	}
 
 	if (PosX == -1) return;
 
-	Note* p_note = m_pNoteController->EqualNotePos(PosX, 12 + TITLE_OFFSET_Y, true);
+	Note* p_note = m_pNoteController->EqualNotePos(PosX, PLAYER_AREA_Y, true);
 
 
 	if (p_note != nullptr)
@@ -127,7 +138,10 @@ void GameScene::CheckNoteKey()
 		{
 			if (keyDown == p_note->GetKeyDown())
 			{
-				p_note->NoteDown();
+				for (int i = 0; i < p_note->GetPos().y - PLAYER_AREA_Y; i++)
+				{
+					p_note->NoteDown();
+				}
 			}
 		}
 		else
@@ -142,7 +156,7 @@ void GameScene::CheckNoteKey()
 
 void GameScene::Release()
 {
-	m_soundManager.Release();
+	m_SoundObject.Release();
 	m_InputObject.Release();
 	m_pNoteController->Release();
 }
@@ -151,17 +165,18 @@ void GameScene::Release()
 
 void GameScene::PrintUI()
 {
-	cout << "¡á¡¡D ¡¡¡á¡¡F ¡¡¡á¡¡J ¡¡¡á¡¡K ¡¡¡á" << endl;
-	cout << "¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á" << endl << endl;
+	int posX = 65, posY = 5;
 
-	GoToXY(40, TITLE_OFFSET_Y);
-	cout << "SONG NAME : DarkNess" << endl;
-	GoToXY(40, TITLE_OFFSET_Y + 1);
-	cout << "SCORE : 1000000" << endl;
-	GoToXY(40, TITLE_OFFSET_Y + 2);
 
-	cout << "CLASS : B" << endl;
-	GoToXY(40, TITLE_OFFSET_Y + 3);
+
+	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+	cout << "SONG NAME : DarkNess";
+	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+	cout << "SCORE : 1000000" ;
+	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+
+	cout << "CLASS : B" ;
+	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
 
 
 }

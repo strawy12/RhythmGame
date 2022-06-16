@@ -27,12 +27,14 @@ using namespace std;
 #define KEY_J 18
 #define KEY_K 26
 
+#define PLAYER_AREA_Y 12
+
 
 typedef struct _pos
 {
 	float x;
 	float y;
-} POS, * PPOS;
+}POS, * PPOS;
 
 enum COLOR
 {

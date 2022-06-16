@@ -47,7 +47,7 @@ void Note::Update(float dt)
 {
 	m_Pos.y += dt * m_fSpeed;
 
-	if (m_Pos.y >= LINE_HEIGHT + TITLE_OFFSET_Y)
+	if (m_Pos.y >= LINE_HEIGHT)
 	{
 		Release();
 	}

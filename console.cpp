@@ -20,6 +20,7 @@ void SetCursorColor(int color, int bgcolor)
 void CursorView(bool isActive)
 {
 	CONSOLE_CURSOR_INFO cursorInfo = { 0, };
+	cursorInfo.dwSize = 1;
 	cursorInfo.bVisible = isActive ? TRUE : FALSE; 
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }

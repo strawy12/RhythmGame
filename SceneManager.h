@@ -4,26 +4,13 @@
 class SceneManager
 {
 
-private:
-	static SceneManager* m_Instance;
-
-public:
-	static SceneManager* GetInstance()
-	{
-		if (m_Instance == nullptr)
-		{
-			m_Instance = new SceneManager;
-		}
-
-		return m_Instance;
-	}
 public:
 	SceneManager();
 	~SceneManager();
 
 public:
-	void RegisterScene(const std::string& sceneName, CScene* scene);
-	void ReserveChangeScene(const std::string& sceneName);
+	void RegisterScene(const string& sceneName, CScene* scene);
+	void ReserveChangeScene(const string& sceneName);
 
 public:
 	void Init();
@@ -31,7 +18,7 @@ public:
 	void Release();
 
 private:
-	std::map<std::string, CScene*>	m_SceneMap;
+	map<string, CScene*> m_SceneMap;
 
 	CScene* m_ReservedScene;
 	CScene* m_CurrentScene;

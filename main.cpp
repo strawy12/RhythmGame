@@ -1,9 +1,11 @@
 #include "console.h"
 #include "CScene.h"
-#include "GameScene.h"
-#include "TitleScene.h"
 #include "main.h"
 #include "CBaseStd.h"
+#include "SceneManager.h"
+#include "GameScene.h"
+#include "TitleScene.h"
+
 
 LARGE_INTEGER g_liPrevCount;
 LARGE_INTEGER g_liCurCount;
@@ -12,29 +14,26 @@ LARGE_INTEGER g_liFrequency;
 float g_fDT;
 float g_fAcc;
 
-CScene* g_pMainScene;
-map<string, CScene*> g_pSceneMap;
-
-class GameScene;
 void MainLoop();
+
+SceneManager g_SceneManager;
+
 
 int main()
 {
-    g_pSceneMap.insert(g_pSceneMap.end(), pair<string, CScene*>("GameScene", new GameScene()));
-    g_pSceneMap.insert(g_pSceneMap.end(), pair<string, CScene*>("TitleScene", new TitleScene()));
     // 현재 카운트
     QueryPerformanceCounter(&g_liPrevCount);
 
     // 초당 카운트 횟수
     QueryPerformanceFrequency(&g_liFrequency);
 
-    g_pMainScene = g_pSceneMap["TitleScene"];
+    g_SceneManager.RegisterScene("GameScene", new GameScene());
+    g_SceneManager.RegisterScene("TitleScene", new TitleScene());
 
     CursorView(false);
     system("mode con cols=100 lines=30 | title If Rhythm");
     srand(time(NULL));
-
-    g_pMainScene->Init();
+    g_SceneManager.ReserveChangeScene("TitleScene");
 
     while (true)
     {
@@ -61,6 +60,6 @@ void MainLoop()
 		g_fAcc = 0.0f;
 	}
 
-    g_pMainScene->Update(g_fDT);
+    g_SceneManager.Update(g_fDT);
 }
 
