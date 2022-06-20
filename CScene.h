@@ -17,7 +17,7 @@ public:
 	virtual	void Init() = 0;
 	virtual	void Update(float dt) = 0;
 	virtual	void Release() = 0;
-	virtual	void PrintScreen() = 0;
+	virtual	void PrintScreen(float dt) = 0;
 
 
 	void PrintTitle(int x, int y)

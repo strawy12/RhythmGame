@@ -25,7 +25,7 @@ public:
 public:
 	void SetPos(float x, float y);
 	void NoteDown();
-	void PrintNote();
+	void PrintNote(int bgColor = C_BLACK);
 	void SetColor(int color);
 	bool GetKeyDown() { return m_keyPush; }
 	POS GetPos();

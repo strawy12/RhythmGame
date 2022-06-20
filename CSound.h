@@ -8,7 +8,7 @@ using namespace FMOD;
 
 enum ESoundType
 {
-	ST_DARKNESSMUSIC = 0,
+	ST_COINMUSIC = 0,
 	ST_EFFECTSOUND,
 	ST_BACKGROUNDSOUND,
 	ST_MAXSOUND

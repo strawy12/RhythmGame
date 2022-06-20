@@ -6,7 +6,7 @@ TitleScene::TitleScene()
 	:m_SelectedNum(1)
 	, m_KeyInputTimer(0)
 	, m_SceneType(SCT_TITLE)
-	, m_SoundVolume(0)
+	, m_SoundVolume(5)
 {
 }
 
@@ -25,7 +25,7 @@ void TitleScene::Update(float dt)
 {
 	if (IsPaused) return;
 	CheckVK(dt);
-	PrintScreen();
+	PrintScreen(dt);
 }
 
 void TitleScene::Release()
@@ -35,7 +35,7 @@ void TitleScene::Release()
 	m_SoundObject.Release();
 }
 
-void TitleScene::PrintScreen()
+void TitleScene::PrintScreen(float dt)
 {
 	PrintTitle(3, 3);
 

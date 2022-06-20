@@ -82,18 +82,14 @@ void Note::NoteDown()
 	}
 }
 
-void Note::PrintNote()
+void Note::PrintNote(int bgColor)
 {
 	if (m_Color == 16)
 	{
 		m_Color = rand() % 16;
-		if (m_Color == C_BLACK)
-		{
-			m_Color = C_WHITE;
-		}
 	}
 
-	SetCursorColor(m_Color, C_BLACK);
+	SetCursorColor(m_Color, bgColor);
 
 	cout << "¡á¡á¡á";
 }

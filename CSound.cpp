@@ -25,7 +25,7 @@ void CSound::Init()
 
 void CSound::Load()
 {
-	m_pFMODSystem->createSound("Data/Darkness.wav", FMOD_LOOP_NORMAL | FMOD_DEFAULT, nullptr, &m_pSound[ST_DARKNESSMUSIC]);
+	m_pFMODSystem->createSound("Data/Coin.wav", FMOD_LOOP_NORMAL | FMOD_DEFAULT, nullptr, &m_pSound[ST_COINMUSIC]);
 
 	m_pFMODSystem->createSound("Data/Effect.wav", FMOD_DEFAULT, nullptr, &m_pSound[ST_EFFECTSOUND]);
 }
@@ -33,10 +33,9 @@ void CSound::Load()
 void CSound::Play(int _Type)
 {
 	if (_Type < 0 || _Type >= ST_MAXSOUND)return;
-	m_pFMODSystem->update();
+	//m_pFMODSystem->update();
 	m_pFMODSystem->playSound(m_pSound[_Type], 0, false, &m_pChannel[_Type]);
 
-	m_pChannel[_Type]->setVolume(1.0f);
 }
 
 
