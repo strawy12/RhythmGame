@@ -25,7 +25,7 @@ void CSound::Init()
 
 void CSound::Load()
 {
-	m_pFMODSystem->createSound("Data/Coin.wav", FMOD_LOOP_NORMAL | FMOD_DEFAULT, nullptr, &m_pSound[ST_COINMUSIC]);
+	m_pFMODSystem->createSound("Data/Coin.wav", FMOD_DEFAULT, nullptr, &m_pSound[ST_COINMUSIC]);
 
 	m_pFMODSystem->createSound("Data/Effect.wav", FMOD_DEFAULT, nullptr, &m_pSound[ST_EFFECTSOUND]);
 }

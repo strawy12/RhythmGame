@@ -1,6 +1,5 @@
 #include "console.h"
 #include "CScene.h"
-#include "main.h"
 #include "CBaseStd.h"
 #include "SceneManager.h"
 #include "GameScene.h"

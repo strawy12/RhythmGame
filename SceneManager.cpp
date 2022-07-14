@@ -1,9 +1,11 @@
 #include "SceneManager.h"
+#include "TitleScene.h"
+#include "GameScene.h"
 
 SceneManager::SceneManager()
 {
 	m_ReservedScene = (nullptr);
-	m_CurrentScene= (nullptr);
+	m_CurrentScene = (nullptr);
 }
 
 SceneManager::~SceneManager()
@@ -30,6 +32,16 @@ void SceneManager::RegisterScene(const std::string& sceneName, CScene* scene)
 void SceneManager::ReserveChangeScene(const std::string& sceneName)
 {
 	auto it = m_SceneMap.find(sceneName);
+
+	if (sceneName == "GameScene")
+	{
+		if (it->second)
+		{
+			delete it->second;
+		}
+		it->second = new GameScene;
+	}
+
 	if (it != m_SceneMap.end())
 	{
 		m_ReservedScene = it->second;
@@ -60,10 +72,7 @@ void SceneManager::Update(float dt)
 		{
 			m_ReservedScene->IsPaused = false;
 		}
-		else
-		{
-			m_ReservedScene->Init();
-		}
+		m_ReservedScene->Init();
 
 		m_CurrentScene = m_ReservedScene;
 		m_ReservedScene = nullptr;

@@ -29,6 +29,7 @@ public:
 	void AddNote(Note* note);
 	void RemoveNote(Note* note);
 
+	bool EmptyNote() { return m_notePairs.size() == 0 && m_pNotes.size() == 0; }
 	void PushNotePair(POS pos, float delay, Note_Type type, int height = 0);
 
 	bool JudgmentOffset(float fValue1, int iValue2);

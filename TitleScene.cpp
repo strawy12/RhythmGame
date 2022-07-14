@@ -6,7 +6,7 @@ TitleScene::TitleScene()
 	:m_SelectedNum(1)
 	, m_KeyInputTimer(0)
 	, m_SceneType(SCT_TITLE)
-	, m_SoundVolume(5)
+	, m_SongNum(0)
 {
 }
 
@@ -16,9 +16,9 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
-	m_CurrentScreen = (char *)m_DefaultScreen;
+	m_CurrentScreen = (char*)m_DefaultScreen;
 	m_SoundObject.Init();
-	m_SoundObject.Play(ST_BACKGROUNDSOUND);
+	system("cls");
 }
 
 void TitleScene::Update(float dt)
@@ -53,7 +53,7 @@ void TitleScene::PrintScreen(float dt)
 			else if ('0' <= *(m_CurrentScreen + (i * 100) + j) &&
 				*(m_CurrentScreen + (i * 100) + j) <= '9')
 			{
-				if (m_SelectedNum == *(m_CurrentScreen + (i * 100 )+ j) - '0')
+				if (m_SelectedNum == *(m_CurrentScreen + (i * 100) + j) - '0')
 				{
 					cout << ">";
 				}
@@ -72,10 +72,9 @@ void TitleScene::PrintScreen(float dt)
 				{
 					if ((*(m_CurrentScreen + (i * 100) + j) == '@'))
 					{
-						int volume = m_SoundVolume;
 						for (int k = 0; k < 5; k++)
 						{
-							if (volume > 0)
+							if (m_SongNum == k)
 							{
 								cout << "■";
 							}
@@ -84,16 +83,31 @@ void TitleScene::PrintScreen(float dt)
 							{
 								cout << "□";
 							}
-							volume--;
 						}
 						j += 5;
 
 						continue;
 					}
+
+					if ((*(m_CurrentScreen + (i * 100) + j) == '$'))
+					{
+						switch (m_SongNum)
+						{
+						case 0:
+							cout << "Coin ";
+							break;
+
+						default:
+							cout << "Empty";
+							break;
+						}
+
+						j += 5;
+					}
 				}
 
 
-				
+
 				cout << *(m_CurrentScreen + (i * 100) + j);
 			}
 		}
@@ -115,24 +129,24 @@ void TitleScene::CheckVK(float dt)
 
 		if (m_InputState.dwKeyLeft == KEY_DOWN || m_InputState.dwKeyLeft == KEY_PUSH)
 		{
-			if (m_SoundVolume > 0 && m_KeyInputTimer >= KeyInputDelayTime)
+			if (m_SongNum > 0 && m_KeyInputTimer >= KeyInputDelayTime)
 			{
 				m_KeyInputTimer = 0;
-				m_SoundVolume--;
+				m_SongNum--;
 			}
 		}
 
 
 		if (m_InputState.dwKeyRight == KEY_DOWN || m_InputState.dwKeyRight == KEY_PUSH)
 		{
-			if (m_SoundVolume < 5 && m_KeyInputTimer >= KeyInputDelayTime)
+			if (m_SongNum < 4 && m_KeyInputTimer >= KeyInputDelayTime)
 			{
 				m_KeyInputTimer = 0;
-				m_SoundVolume++;
+				m_SongNum++;
 			}
 		}
 
-		m_SoundObject.SetVolume(ST_BACKGROUNDSOUND, m_SoundVolume / 5);
+		m_SoundObject.SetVolume(ST_BACKGROUNDSOUND, m_SongNum / 5);
 	}
 
 	if (m_InputState.dwKeySpace == KEY_PUSH)
@@ -142,6 +156,13 @@ void TitleScene::CheckVK(float dt)
 			switch (m_SelectedNum)
 			{
 			case 1:
+				if (m_SongNum != 0)
+				{
+					GoToXY(27, 30);
+					cout << "노래가 선택되지 않았습니다.";
+					return;
+				}
+
 				IsPaused = true;
 				ReservedSceneName = "GameScene";
 				return;
@@ -174,13 +195,13 @@ void TitleScene::CheckVK(float dt)
 				break;
 			}
 		}
-		
+
 
 	}
 
 	if (m_InputState.dwKeyDown == KEY_DOWN || m_InputState.dwKeyDown == KEY_PUSH)
 	{
-		if (m_SelectedNum < ((m_SceneType == SCT_TITLE)?3:2) && m_KeyInputTimer >= KeyInputDelayTime)
+		if (m_SelectedNum < ((m_SceneType == SCT_TITLE) ? 3 : 2) && m_KeyInputTimer >= KeyInputDelayTime)
 		{
 			m_KeyInputTimer = 0;
 			m_SelectedNum++;
@@ -196,6 +217,6 @@ void TitleScene::CheckVK(float dt)
 		}
 	}
 
-	
+
 
 }

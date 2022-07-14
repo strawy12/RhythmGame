@@ -34,7 +34,10 @@ void GameScene::Init()
 
 void GameScene::Update(float dt)
 {
-	m_PlayTime += dt;
+	if (!m_pNoteController->EmptyNote())
+	{
+		m_PlayTime += dt;
+	}
 	m_pNoteController->Update(dt);
 	PrintScreen(dt);
 	CheckNoteKey();
@@ -46,155 +49,180 @@ void GameScene::PrintScreen(float dt)
 	int posY = 2;
 	GoToXY(0, 0);
 
-	PrintTitle(3, 0);
 
-	int i = 0;
-	int j = 0;
-
-	for (i = 0; i < 15; i++)
+	if (m_pNoteController->EmptyNote())
 	{
-		GoToXY(posX, i + TITLE_OFFSET_Y + posY);
-
-		for (j = 0; j < 4; j++)
+		if (m_Cls == false)
 		{
-			SetCursorColor(C_WHITE, C_BLACK);
-			cout << "¡á";
+			m_Cls = true;
+			system("cls");
+		}
 
-			Note* note = m_pNoteController->EqualNotePos(2 + (8 * j), i);
+		PrintTitle(3, 0);
+		GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á¡¡    [ Game Clear ]      ¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á ¡¡ - Space To Title -    ¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
+		cout << "¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á"; 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
 
-			if (i >= PLAYER_AREA_Y)
+	}
+
+	else
+	{
+		PrintTitle(3, 0);
+
+		int i = 0;
+		int j = 0;
+
+		for (i = 0; i < 15; i++)
+		{
+			GoToXY(posX, i + TITLE_OFFSET_Y + posY);
+
+			for (j = 0; j < 4; j++)
 			{
-				if (j == 0 || j == 3)
+				SetCursorColor(C_WHITE, C_BLACK);
+				cout << "¡á";
+
+				Note* note = m_pNoteController->EqualNotePos(2 + (8 * j), i);
+
+				if (i >= PLAYER_AREA_Y)
 				{
-					SetCursorColor(C_BLACK, C_LIGHTYELLOW);
-				}
-
-				else
-				{
-					SetCursorColor(C_BLACK, C_LIGHTBLUE);
-
-				}
-
-
-				if (i == PLAYER_AREA_Y)
-				{
-					int color;
-
 					if (j == 0 || j == 3)
 					{
-						SetCursorColor(C_WHITE, C_YELLOW);
-						color = C_YELLOW;
-
+						SetCursorColor(C_BLACK, C_LIGHTYELLOW);
 					}
+
 					else
 					{
-						SetCursorColor(C_WHITE, C_BLUE);
-						color = C_BLUE;
+						SetCursorColor(C_BLACK, C_LIGHTBLUE);
 
 					}
 
-					if (m_HitSuccess[j] != KTS_NONE)
-					{
-						m_SuccessTimer[j] += dt;
-						if (m_SuccessTimer[j] >= m_SuccessDelayTime)
-						{
-							m_HitSuccess[j] = KTS_NONE;
-							m_SuccessTimer[j] = 0.0f;
-						}
 
+					if (i == PLAYER_AREA_Y)
+					{
+						int color;
+
+						if (j == 0 || j == 3)
+						{
+							SetCursorColor(C_WHITE, C_YELLOW);
+							color = C_YELLOW;
+
+						}
 						else
 						{
-							if (m_HitSuccess[j] == KTS_SUCCESS)
+							SetCursorColor(C_WHITE, C_BLUE);
+							color = C_BLUE;
+
+						}
+
+						if (m_HitSuccess[j] != KTS_NONE)
+						{
+							m_SuccessTimer[j] += dt;
+							if (m_SuccessTimer[j] >= m_SuccessDelayTime)
 							{
-								SetCursorColor(C_WHITE, C_GREEN);
-								color = C_GREEN;
+								m_HitSuccess[j] = KTS_NONE;
+								m_SuccessTimer[j] = 0.0f;
 							}
 
 							else
 							{
-								SetCursorColor(C_WHITE, C_RED);
-								color = C_RED;
+								if (m_HitSuccess[j] == KTS_SUCCESS)
+								{
+									SetCursorColor(C_WHITE, C_GREEN);
+									color = C_GREEN;
+								}
+
+								else
+								{
+									SetCursorColor(C_WHITE, C_RED);
+									color = C_RED;
+								}
+
 							}
-
 						}
-					}
 
-					
+						if (note)
+						{
+							note->PrintNote(color);
+						}
 
-					if (note)
-					{
-						note->PrintNote(color);
+						else
+						{
+							cout << "¡¡¡¡¡¡";
+						}
 					}
 
 					else
 					{
 						cout << "¡¡¡¡¡¡";
 					}
+
+				}
+
+				else if (note)
+				{
+					note->PrintNote();
 				}
 
 				else
 				{
 					cout << "¡¡¡¡¡¡";
 				}
-
 			}
 
-			else if (note)
+			SetCursorColor(C_WHITE, C_BLACK);
+			cout << "¡á";
+		}
+
+		GoToXY(posX, (i++) + +TITLE_OFFSET_Y + posY);
+
+		SetCursorColor(C_BLACK, C_LIGHTYELLOW);
+		for (int i = 0; i < 4; i++)
+		{
+			SetCursorColor(C_WHITE, C_BLACK);
+			cout << "¡á";
+
+			if (i == 0 || i == 3)
 			{
-				note->PrintNote();
+				SetCursorColor(C_BLACK, C_LIGHTYELLOW);
 			}
 
 			else
 			{
-				cout << "¡¡¡¡¡¡";
+				SetCursorColor(C_BLACK, C_LIGHTBLUE);
+			}
+			switch (i)
+			{
+			case 0:
+				cout << "¡¡D ¡¡";
+				break;
+
+			case 1:
+				cout << "¡¡F ¡¡";
+				break;
+
+
+			case 2:
+				cout << "¡¡J ¡¡";
+				break;
+
+			case 3:
+				cout << "¡¡K ¡¡";
+				break;
 			}
 		}
 
 		SetCursorColor(C_WHITE, C_BLACK);
 		cout << "¡á";
+		GoToXY(posX, (i++) + +TITLE_OFFSET_Y + posY);
+		cout << "¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á";
 	}
+	
 
-	GoToXY(posX, (i++) + +TITLE_OFFSET_Y + posY);
-
-	SetCursorColor(C_BLACK, C_LIGHTYELLOW);
-	for (int i = 0; i < 4; i++)
-	{
-		SetCursorColor(C_WHITE, C_BLACK);
-		cout << "¡á";
-
-		if (i == 0 || i == 3)
-		{
-			SetCursorColor(C_BLACK, C_LIGHTYELLOW);
-		}
-
-		else
-		{
-			SetCursorColor(C_BLACK, C_LIGHTBLUE);
-		}
-		switch (i)
-		{
-		case 0:
-			cout << "¡¡D ¡¡";
-			break;
-
-		case 1:
-			cout << "¡¡F ¡¡";
-			break;
-
-
-		case 2:
-			cout << "¡¡J ¡¡";
-			break;
-
-		case 3:
-			cout << "¡¡K ¡¡";
-			break;
-		}
-	}
-	SetCursorColor(C_WHITE, C_BLACK);
-	cout << "¡á";
-	GoToXY(posX, (i++) + +TITLE_OFFSET_Y + posY);
-	cout << "¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á";
 
 	PrintUI();
 }
@@ -205,7 +233,17 @@ void GameScene::CheckNoteKey()
 	m_InputObject.KeyCheck(VK_F, m_InputState.dwKeyF);
 	m_InputObject.KeyCheck(VK_J, m_InputState.dwKeyJ);
 	m_InputObject.KeyCheck(VK_K, m_InputState.dwKeyK);
-	m_InputObject.KeyCheck(VK_ESCAPE, m_InputState.dwKeyESC);
+
+	if (m_pNoteController->EmptyNote())
+	{
+		m_InputObject.KeyCheck(VK_SPACE, m_InputState.dwKeySpace);
+		if (m_InputState.dwKeySpace == KEY_PUSH)
+		{
+			m_SoundObject.Paused(ST_COINMUSIC, true);
+			IsPaused = true;
+			ReservedSceneName = "TitleScene";
+		}
+	}
 
 
 	if (m_InputState.dwKeyD == KEY_PUSH)
@@ -259,11 +297,6 @@ void GameScene::CheckNoteKey()
 		ClearNote(KEY_K, 3, true);
 	}
 
-	if (m_InputState.dwKeyESC == KEY_PUSH)
-	{
-		IsPaused = !IsPaused;
-		m_SoundObject.Paused(ST_COINMUSIC, IsPaused);
-	}
 }
 
 void GameScene::ClearNote(int PosX, int keyNum, bool keyDown)
@@ -335,18 +368,12 @@ void GameScene::PrintUI()
 
 
 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
-	cout << "SONG NAME : " << endl;
+	cout << "SONG NAME : " << "Coin - IU";
 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
 	cout << "SCORE : " << m_Score;
 	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
 
-	cout << "CLASS : B";
-	GoToXY(posX, TITLE_OFFSET_Y + (posY++));
-
 	printf("PlayTime : %.1f", m_PlayTime);
-
-
-
 }
 
 void GameScene::CalcScore(float error)

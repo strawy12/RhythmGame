@@ -28,9 +28,9 @@ private:
 	{
 		"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖",
 		"弛                                弛",
-		"弛       1□ Game Start ■        弛",
-		"弛       2□  Setting   ■        弛",
-		"弛       3□    Quit    ■        弛",
+		"弛       1□  Game Start  ■      弛",
+		"弛       2□ Song Select  ■      弛",
+		"弛       3□     Quit     ■      弛",
 		"弛                                弛",
 		"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎",
 		"&"
@@ -40,8 +40,9 @@ private:
 	{
 		"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖",
 		"弛                                弛",
-		"弛    1□ Volume: @@@@@ ■    弛",
-		"弛    2□        Back       ■    弛",
+		"弛   1□   Song: @@@@@   ■   弛",
+		"弛    □  Song Name : $$$$$  ■   弛",
+		"弛   2□         Quit        ■   弛",
 		"弛                                弛",
 		"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎",
 		"&"
@@ -52,7 +53,7 @@ private:
 	char *m_CurrentScreen;
 	float m_KeyInputTimer;
 
-	int m_SoundVolume;
+	int m_SongNum;
 
 	int m_SelectedNum;
 	int m_SceneType;

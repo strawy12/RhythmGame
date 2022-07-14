@@ -39,7 +39,7 @@ private:
 	int m_HitSuccess[4];
 	float m_SuccessTimer[4];
 	float m_SuccessDelayTime;
-
+	bool m_Cls;
 	float m_PlayTime;
 	int m_Score;
 	NoteController* m_pNoteController;

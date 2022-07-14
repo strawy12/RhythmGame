@@ -8,7 +8,7 @@
 #include<fcntl.h>
 class CScene
 {
-
+ 
 public:
 	CScene() = default;
 	virtual ~CScene() = default;
@@ -19,13 +19,9 @@ public:
 	virtual	void Release() = 0;
 	virtual	void PrintScreen(float dt) = 0;
 
-
 	void PrintTitle(int x, int y)
 	{
 		_setmode(_fileno(stdout), _O_U16TEXT);
-		/*
-
-		*/
 		GoToXY(x, y);
 
 		wcout << L" ___  ________      ________  ___  ___      ___    ___ _________  ___  ___  _____ ______"; GoToXY(x, y + 1);

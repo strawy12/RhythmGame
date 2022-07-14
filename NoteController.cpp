@@ -7,6 +7,8 @@ NoteController::NoteController()
 	, m_noteDefaultSpeed(8.0f)
 	, m_judgmentOffset(1.0f)
 {
+	if(m_Instance == nullptr)
+	m_Instance = this;
 }
 
 NoteController::~NoteController()
@@ -122,46 +124,101 @@ void NoteController::Init()
 	PushNotePair(POS{ KEY_K, 0 }, 0.0f, Note_Type::Single);
 	PushNotePair(POS{ KEY_J, 0 }, 4.0f, Note_Type::Single);
 
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
+	for (int i = 0; i < 5; i++)
+	{
+		PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+		PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+		PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+		PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+	}
+
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
 
 	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Long, 12);
-	PushNotePair(POS{ KEY_K, 0 }, 1.7f, Note_Type::Long, 12);
+	PushNotePair(POS{ KEY_K, 0 }, 2.0f, Note_Type::Long, 12);
 
-	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Long, 8);
-	PushNotePair(POS{ KEY_J, 0 }, 3.0f, Note_Type::Long, 8);
+	for (int i = 0; i < 5; i++)
+	{
+		PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+		PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+		PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+		PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+	}
 
-	PushNotePair(POS{ KEY_F, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_K, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_F, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_F, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_K, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_F, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_K, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 0.064f, Note_Type::Single);
-	PushNotePair(POS{ KEY_F, 0 }, 0.064f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_J, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_K, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_F, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 1.0f, Note_Type::Single);
 
-	PushNotePair(POS{ KEY_F, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_K, 0 }, 0.128f, Note_Type::Single);
-	PushNotePair(POS{ KEY_D, 0 }, 0.064f, Note_Type::Single);
-	PushNotePair(POS{ KEY_F, 0 }, 0.064f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_K, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.5f, Note_Type::Single);
+
+	float delay = 0.16f;
+	PushNotePair(POS{ KEY_D, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, delay, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, delay+0.1f, Note_Type::Single);
+	PushNotePair(POS{ KEY_D, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_F, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_J, 0 }, 0.0f, Note_Type::Single);
+	PushNotePair(POS{ KEY_K, 0 }, 4.0f, Note_Type::Single);
+
 }
 
 
@@ -214,7 +271,6 @@ void NoteController::RemoveNote(Note* note)
 	{
 		if (m_pNotes[i] == note)
 		{
-			m_pNotes[i]->Release();
 			delete m_pNotes[i];
 			m_pNotes.erase(m_pNotes.begin() + i);
 		}

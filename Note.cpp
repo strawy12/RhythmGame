@@ -49,7 +49,19 @@ void Note::Update(float dt)
 
 	if (m_Pos.y >= LINE_HEIGHT)
 	{
-		Release();
+		if (m_Type == Note_Type::Long)
+		{
+			if (m_Pos.y - m_Height-1 >= LINE_HEIGHT)
+			{
+				Release();
+				return;
+			}
+		}
+
+		else
+		{
+			Release();
+		}
 	}
 	//if (m_pPos->y > 10)
 	//{
